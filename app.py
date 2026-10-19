@@ -92,7 +92,7 @@ elif st.session_state["auth_step"] == "login_screen":
             if submitted_login:
                 if not operator_input.strip():
                     st.error("⚠️ Please enter your name.")
-                elif password_input == "admin123":  # Change password here if desired
+                elif password_input == "7505":  # Change password here if desired
                     st.session_state["operator_name"] = operator_input.strip()
                     st.session_state["authenticated"] = True
                     st.session_state["auth_step"] = "app_screen"
