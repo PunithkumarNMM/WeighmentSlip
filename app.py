@@ -59,7 +59,7 @@ if "authenticated" not in st.session_state:
 
 # Screen 1: Full-Screen Image & Branding
 if st.session_state["auth_step"] == "image_screen":
-    st.write("") # Spacer
+    st.write("")
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         try:
@@ -92,7 +92,7 @@ elif st.session_state["auth_step"] == "login_screen":
             if submitted_login:
                 if not operator_input.strip():
                     st.error("⚠️ Please enter your name.")
-                elif password_input == "7505":  # Change password here if desired
+                elif password_input == "7505":
                     st.session_state["operator_name"] = operator_input.strip()
                     st.session_state["authenticated"] = True
                     st.session_state["auth_step"] = "app_screen"
@@ -132,7 +132,15 @@ with st.form("weighment_form"):
         customer = st.text_input("Customer", "Ishan Enterprises")
         
         slip_date = st.date_input("Date", datetime.date.today())
-        slip_time = st.time_input("Time", datetime.datetime.now().time())
+        
+        st.markdown("**Time (12-hour)**")
+        t_h, t_m, t_ap = st.columns(3)
+        with t_h:
+            slip_hour = st.selectbox("Hour", list(range(1, 13)), index=9)
+        with t_m:
+            slip_min = st.selectbox("Minute", [f"{i:02d}" for i in range(60)], index=35)
+        with t_ap:
+            slip_ampm = st.selectbox("AM/PM", ["AM", "PM"], index=0)
         
         rate = st.text_input("Rate Rs.", "00")
         total_amount = st.text_input("Total Amount Rs.", "00")
@@ -142,7 +150,7 @@ with st.form("weighment_form"):
 if submitted:
     doc = DocxTemplate("weighment_format.docx")
 
-    formatted_date_time = f"{slip_date.strftime('%d/%m/%Y')} TIME {slip_time.strftime('%I:%M %p')}"
+    formatted_date_time = f"{slip_date.strftime('%d/%m/%Y')} TIME {slip_hour}:{slip_min} {slip_ampm}"
 
     context = {
         "ticket_no": ticket_no,
