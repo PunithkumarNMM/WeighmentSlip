@@ -18,21 +18,6 @@ st.markdown("""
         font-weight: 700 !important;
         font-size: 1.05rem !important;
     }
-    .fullscreen-splash {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        padding: 2rem;
-        overflow-y: auto;
-    }
     .brand-title {
         font-size: 3.2rem;
         font-weight: 800;
@@ -74,26 +59,26 @@ if "authenticated" not in st.session_state:
 
 # Screen 1: Full-Screen Image & Branding
 if st.session_state["auth_step"] == "image_screen":
-    st.markdown("<div class='fullscreen-splash'>", unsafe_allow_html=True)
-    try:
-        st.image("logo.png", width=650)
-    except Exception:
-        st.markdown("<h1 style='color: #38bdf8;'>TRAIL & ERROR</h1>", unsafe_allow_html=True)
+    st.write("") # Spacer
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        try:
+            st.image("logo.png", use_container_width=True)
+        except Exception:
+            st.markdown("<h1 style='color: #38bdf8; text-align: center;'>T & E</h1>", unsafe_allow_html=True)
+            
+        st.markdown("<div class='brand-title'>TRAIL & ERROR</div>", unsafe_allow_html=True)
+        st.markdown("<div class='brand-subtitle'>Crafted By Punith Kumar N M</div>", unsafe_allow_html=True)
         
-    st.markdown("<div class='brand-title'>TRAIL & ERROR</div>", unsafe_allow_html=True)
-    st.markdown("<div class='brand-subtitle'>Crafted By Punith Kumar N M</div>", unsafe_allow_html=True)
-    
-    col_btn1, col_btn2, col_btn3 = st.columns([2, 1.5, 2])
-    with col_btn2:
+        st.write("")
         if st.button("🚀 Proceed to Secure Portal", use_container_width=True):
             st.session_state["auth_step"] = "login_screen"
             st.rerun()
-            
-    st.markdown("</div>", unsafe_allow_html=True)
     st.stop()
 
 # Screen 2: Password and Operator Name Entry
 elif st.session_state["auth_step"] == "login_screen":
+    st.write("")
     col1, col2, col3 = st.columns([1, 1.5, 1])
     with col2:
         st.markdown("<h2 style='text-align: center; color: #38bdf8;'>🔒 Authentication Required</h2>", unsafe_allow_html=True)
@@ -139,7 +124,6 @@ with st.form("weighment_form"):
         loaded_weight_num = st.number_input("Loaded Weight (Kgs)", value=41440.0, step=1.0)
         empty_weight_num = st.number_input("Empty Weight (Kgs)", value=11600.0, step=1.0)
         
-        # Auto-calculate net weight
         net_weight_num = loaded_weight_num - empty_weight_num
         st.info(f"Calculated Net Weight: {net_weight_num:,.0f} Kgs")
 
