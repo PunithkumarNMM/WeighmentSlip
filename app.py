@@ -92,7 +92,7 @@ elif st.session_state["auth_step"] == "login_screen":
             if submitted_login:
                 if not operator_input.strip():
                     st.error("⚠️ Please enter your name.")
-                elif password_input == "7505":
+                elif password_input == "admin123":
                     st.session_state["operator_name"] = operator_input.strip()
                     st.session_state["authenticated"] = True
                     st.session_state["auth_step"] = "app_screen"
@@ -131,7 +131,7 @@ with st.form("weighment_form"):
         material = st.text_input("Material", "12 MM")
         customer = st.text_input("Customer", "Ishan Enterprises")
         
-        slip_date = st.date_input("Date", datetime.date.today())
+        slip_date_input = st.date_input("Date", datetime.date.today())
         
         st.markdown("**Time (12-hour)**")
         t_h, t_m, t_ap = st.columns(3)
@@ -150,7 +150,8 @@ with st.form("weighment_form"):
 if submitted:
     doc = DocxTemplate("weighment_format.docx")
 
-    formatted_date_time = f"{slip_date.strftime('%d/%m/%Y')} TIME {slip_hour}:{slip_min} {slip_ampm}"
+    date_str = slip_date_input.strftime('%d/%m/%Y')
+    time_str = f"{slip_hour}:{slip_min} {slip_ampm}"
 
     context = {
         "ticket_no": ticket_no,
