@@ -160,8 +160,8 @@ if submitted:
         "net_weight": f"{net_weight_num:,.0f} Kgs",
         "material": material,
         "customer": customer,
-        "slip_date": slip_str,
-        "slip_time": slip_str,
+        "slip_date": date_str,
+        "slip_time": time_str,
         "rate": rate,
         "total_amount": total_amount,
         "operator": st.session_state["operator_name"]
